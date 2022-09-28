@@ -26,4 +26,16 @@ def valid(url):
     parse = urlparse(url)
     return bool(parse.scheme) and bool(parse.netloc)     
 
+name = string.ascii_lowercase
+str = ''.join(random.sample(name, 15))
+rand_user = {'User-Agent': str}
 
+html_text = requests.get(url, headers = rand_user).text
+     
+soup = bs(html_text, 'html.parser') 
+img = soup.find_all('img', class_ = "serp-item__thumb justifier__thumb")
+
+url_src = []
+
+for i in img:
+    url_src.append(i.get("src"))
